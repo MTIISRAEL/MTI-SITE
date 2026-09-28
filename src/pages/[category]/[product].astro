@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { render } from 'astro:content';
-import { categories, products, settings, isSales, isBrand, wa, tel, price } from '../../lib/site.js';
+import { categories, products, settings, isSales, isBrand, wa, tel } from '../../lib/site.js';
 
 export async function getStaticPaths() {
   const cats = await categories();
@@ -28,9 +28,7 @@ const { Content } = await render(p);
         <div class="product-info">
           <h1>{d.title}</h1>
           {d.summary && <p class="lead">{d.summary}</p>}
-          {isSales && d.price && (
-            <p class="price big">{d.sale_price ? <><s>{price(d.price)}</s> <strong>{price(d.sale_price)}</strong></> : <strong>{price(d.price)}</strong>}</p>
-          )}
+          {isSales && d.price && <p class="price big"><strong>{d.price}</strong>{d.on_sale && <span class="badge inline">מבצע</span>}</p>}
           {d.specs.length > 0 && (
             <table class="specs"><tbody>{d.specs.map((s) => <tr><th>{s.label}</th><td>{s.value}</td></tr>)}</tbody></table>
           )}

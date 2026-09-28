@@ -1,0 +1,6 @@
+// MTI ISRAEL (group site)
+{
+  "name": "mti-hub",
+  "compatibility_date": "2026-09-01",
+  "assets": { "directory": "./dist/hub", "not_found_handling": "404-page" }
+}

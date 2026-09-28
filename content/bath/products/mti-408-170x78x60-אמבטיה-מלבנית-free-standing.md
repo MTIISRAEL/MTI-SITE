@@ -1,0 +1,31 @@
+---
+title: "MTI-408 170X78X60 אמבטיה מלבנית Free Standing"
+category: "freestanding"
+type: "מלבניות"
+images:
+  - "/media/2022-05-408.jpg"
+  - "/media/2024-07-170X78-150X72-MTI-408-מפרט.jpg"
+specs:
+  - label: "אורך (ס\"מ)"
+    value: "170"
+  - label: "רוחב (ס\"מ)"
+    value: "78"
+  - label: "גובה (ס\"מ)"
+    value: "60"
+  - label: "מרחק לניקוז (ס\"מ)"
+    value: "85"
+  - label: "משקל (ק\"ג)"
+    value: "37"
+  - label: "תכולת מים (ליטר)"
+    value: "לחץ למידע נוסף"
+  - label: "סוג"
+    value: "אמבטיה עומדת"
+  - label: "עיצוב"
+    value: "אמבטיה מלבנית"
+  - label: "כמות רוחצים"
+    value: "1"
+  - label: "ניקוז"
+    value: "אמצע"
+order: 100
+old_url: "https://mtibath.co.il/product/mti-408-170x78x60-%d7%90%d7%9e%d7%91%d7%98%d7%99%d7%94-%d7%9e%d7%9c%d7%91%d7%a0%d7%99%d7%aa-free-standing/"
+---

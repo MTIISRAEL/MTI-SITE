@@ -1,0 +1,31 @@
+---
+title: "MTI-406 168X74X66 אמבטיה אובלית Free Standing"
+category: "freestanding"
+type: "אובליות"
+images:
+  - "/media/2022-05-406.jpg"
+  - "/media/2024-07-168X74-158X72-MTI-406-מפרט.jpg"
+specs:
+  - label: "אורך (ס\"מ)"
+    value: "168"
+  - label: "רוחב (ס\"מ)"
+    value: "74"
+  - label: "גובה (ס\"מ)"
+    value: "66"
+  - label: "מרחק לניקוז (ס\"מ)"
+    value: "83"
+  - label: "משקל (ק\"ג)"
+    value: "39"
+  - label: "תכולת מים (ליטר)"
+    value: "לחץ למידע נוסף"
+  - label: "סוג"
+    value: "אמבטיה עומדת"
+  - label: "עיצוב"
+    value: "אמבטיה אובלית"
+  - label: "כמות רוחצים"
+    value: "1"
+  - label: "ניקוז"
+    value: "אמצע"
+order: 100
+old_url: "https://mtibath.co.il/product/mti-406-168x74x66-%d7%90%d7%9e%d7%91%d7%98%d7%99%d7%94-%d7%90%d7%95%d7%91%d7%9c%d7%99%d7%aa-free-standing/"
+---

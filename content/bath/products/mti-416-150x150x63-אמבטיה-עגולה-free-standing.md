@@ -1,0 +1,31 @@
+---
+title: "MTI-416 150X150X63 אמבטיה עגולה Free Standing"
+category: "freestanding"
+type: "אובליות"
+images:
+  - "/media/2022-05-416.jpg"
+  - "/media/2024-07-150X150-MTI-416-מפרט.jpg"
+specs:
+  - label: "אורך (ס\"מ)"
+    value: "150"
+  - label: "רוחב (ס\"מ)"
+    value: "150"
+  - label: "גובה (ס\"מ)"
+    value: "63"
+  - label: "מרחק לניקוז (ס\"מ)"
+    value: "75"
+  - label: "משקל (ק\"ג)"
+    value: "49"
+  - label: "תכולת מים (ליטר)"
+    value: "לחץ למידע נוסף"
+  - label: "סוג"
+    value: "אמבטיה עומדת"
+  - label: "עיצוב"
+    value: "אמבטיה עגולה"
+  - label: "כמות רוחצים"
+    value: "2"
+  - label: "ניקוז"
+    value: "אמצע"
+order: 100
+old_url: "https://mtibath.co.il/product/mti-416-150x150x63-%d7%90%d7%9e%d7%91%d7%98%d7%99%d7%94-%d7%a2%d7%92%d7%95%d7%9c%d7%94-free-standing/"
+---

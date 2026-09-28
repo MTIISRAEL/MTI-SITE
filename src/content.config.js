@@ -24,8 +24,11 @@ const products = defineCollection({
     category: z.string(),
     summary: z.string().default(''),
     images: z.array(z.string()).default([]),
-    price: z.number().optional(),
-    sale_price: z.number().optional(),
+    // Free text so editors can write e.g. "23,990 ₪ + מע״מ".
+    price: z.string().optional(),
+    on_sale: z.boolean().default(false),
+    // Sub-type shown as a filter on the category page, e.g. "פינתית", "4-5 אנשים".
+    type: z.string().optional(),
     specs: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
     order: z.number().default(100),
     featured: z.boolean().default(false),

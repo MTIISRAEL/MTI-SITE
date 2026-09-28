@@ -10,7 +10,6 @@ export const isHub = SITE === 'hub';
 
 export const wa = (number, text) => `https://wa.me/${number}${text ? `?text=${encodeURIComponent(text)}` : ''}`;
 export const tel = (phone) => `tel:+972${phone.replace(/\D/g, '').replace(/^0/, '')}`;
-export const price = (n) => `₪${n.toLocaleString('he-IL')}`;
 
 export async function categories() {
   return (await getCollection('categories')).sort((a, b) => a.data.order - b.data.order);

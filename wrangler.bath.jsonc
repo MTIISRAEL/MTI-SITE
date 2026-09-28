@@ -1,0 +1,6 @@
+// MTI BATH
+{
+  "name": "mti-bath",
+  "compatibility_date": "2026-09-01",
+  "assets": { "directory": "./dist/bath", "not_found_handling": "404-page" }
+}

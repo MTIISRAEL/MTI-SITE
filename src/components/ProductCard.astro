@@ -1,20 +1,16 @@
 ---
-import { isSales, price } from '../lib/site.js';
+import { isSales } from '../lib/site.js';
 const { p } = Astro.props;
 const d = p.data;
 ---
-<a class="card" href={`/${d.category}/${p.id}/`}>
+<a class="card" data-type={d.type} href={`/${d.category}/${p.id}/`}>
   <div class="card-media">
     {d.images[0] ? <img src={d.images[0]} alt={d.title} loading="lazy" /> : <span>תמונה</span>}
-    {isSales && d.sale_price && <span class="badge">מבצע</span>}
+    {d.on_sale && <span class="badge">מבצע</span>}
   </div>
   <div class="card-body">
     <h3>{d.title}</h3>
     {d.summary && <p>{d.summary}</p>}
-    {isSales && d.price && (
-      <p class="price">
-        {d.sale_price ? <><s>{price(d.price)}</s> <strong>{price(d.sale_price)}</strong></> : <strong>{price(d.price)}</strong>}
-      </p>
-    )}
+    {isSales && d.price && <p class="price"><strong>{d.price}</strong></p>}
   </div>
 </a>

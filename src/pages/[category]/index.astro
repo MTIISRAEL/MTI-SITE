@@ -9,6 +9,7 @@ export async function getStaticPaths() {
 }
 const { c } = Astro.props;
 const list = await products(c.id);
+const types = [...new Set(list.map((p) => p.data.type).filter(Boolean))];
 ---
 <Base title={c.data.title} description={c.data.summary} image={c.data.image}>
   <section class="hero small">
@@ -21,10 +22,23 @@ const list = await products(c.id);
   <section class="section">
     <div class="container">
       {c.body && <div class="prose" set:html={c.rendered?.html} />}
+      {types.length > 1 && (
+        <div class="chips filter" role="group" aria-label="סינון לפי סוג">
+          <button type="button" class="chip active" data-filter="">הכל</button>
+          {types.map((t) => <button type="button" class="chip" data-filter={t}>{t}</button>)}
+        </div>
+      )}
       {list.length
-        ? <div class="grid">{list.map((p) => <ProductCard p={p} />)}</div>
+        ? <div class="grid" id="product-grid">{list.map((p) => <ProductCard p={p} />)}</div>
         : <p class="lead">הדגמים בקטגוריה הזו יתווספו בקרוב.</p>}
     </div>
   </section>
   <CtaBand />
+  <script>
+    document.querySelectorAll('.chip[data-filter]').forEach((b) => b.addEventListener('click', () => {
+      document.querySelectorAll('.chip[data-filter]').forEach((x) => x.classList.toggle('active', x === b));
+      const t = b.dataset.filter;
+      document.querySelectorAll('#product-grid .card').forEach((c) => { c.hidden = t && c.dataset.type !== t; });
+    }));
+  </script>
 </Base>

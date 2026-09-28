@@ -1,0 +1,31 @@
+---
+title: "MTI-413 180X80X60 אמבטיה מלבנית Free Standing"
+category: "freestanding"
+type: "מלבניות"
+images:
+  - "/media/2022-05-413.jpg"
+  - "/media/2024-07-180X80-MTI-413-מפרט.jpg"
+specs:
+  - label: "אורך (ס\"מ)"
+    value: "180"
+  - label: "רוחב (ס\"מ)"
+    value: "80"
+  - label: "גובה (ס\"מ)"
+    value: "60"
+  - label: "מרחק לניקוז (ס\"מ)"
+    value: "90"
+  - label: "משקל (ק\"ג)"
+    value: "46"
+  - label: "תכולת מים (ליטר)"
+    value: "לחץ למידע נוסף"
+  - label: "סוג"
+    value: "אמבטיה עומדת"
+  - label: "עיצוב"
+    value: "אמבטיה מלבנית"
+  - label: "כמות רוחצים"
+    value: "2"
+  - label: "ניקוז"
+    value: "אמצע"
+order: 100
+old_url: "https://mtibath.co.il/product/mti-413-180x80x60-%d7%90%d7%9e%d7%91%d7%98%d7%99%d7%94-%d7%9e%d7%9c%d7%91%d7%a0%d7%99%d7%aa-free-standing/"
+---

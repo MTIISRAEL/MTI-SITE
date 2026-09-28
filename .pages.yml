@@ -1,0 +1,258 @@
+# Pages CMS (https://pagescms.org) configuration: the editing screen for the office team.
+# Each site has its own products, categories and settings. Images go to that site's media folder.
+media:
+  - name: spa
+    label: תמונות MTI SPA
+    input: public/spa/media
+    output: /media
+    categories: [image]
+  - name: bath
+    label: תמונות MTI BATH
+    input: public/bath/media
+    output: /media
+    categories: [image]
+  - name: hub
+    label: תמונות MTI ISRAEL
+    input: public/hub/media
+    output: /media
+    categories: [image]
+content:
+  - name: spa-products
+    label: "MTI SPA · מוצרים"
+    type: collection
+    path: content/spa/products
+    filename: "{primary}.md"
+    view:
+      primary: title
+      fields: [title, category, type, price, on_sale]
+      sort: [title]
+      search: [title]
+    fields:
+      - { name: title, label: שם המוצר, type: string, required: true }
+      - name: category
+        label: קטגוריה
+        type: select
+        required: true
+        options:
+          values:
+            - { value: equipment, label: "ציוד וחומרים" }
+            - { value: hot-tubs, label: "ג׳קוזי לבית ולגינה" }
+            - { value: swim-spas, label: "בריכות שחייה נגד זרם" }
+      - { name: type, label: "סוג (לסינון בעמוד הקטגוריה)", type: string }
+      - { name: summary, label: תיאור קצר, type: text }
+      - name: images
+        label: תמונות (הראשונה היא הראשית)
+        type: image
+        list: true
+        options: { media: spa }
+      - { name: price, label: מחיר (טקסט חופשי, למשל 23,990 ₪ + מע״מ), type: string }
+      - { name: on_sale, label: במבצע, type: boolean }
+      - name: specs
+        label: מפרט טכני
+        type: object
+        list: true
+        fields:
+          - { name: label, label: שם השדה, type: string }
+          - { name: value, label: ערך, type: string }
+      - { name: featured, label: להציג בדף הבית, type: boolean }
+      - { name: hidden, label: להסתיר מהאתר, type: boolean }
+      - { name: order, label: "סדר הופעה (מספר קטן קודם)", type: number }
+      - { name: old_url, label: כתובת באתר הישן, type: string, hidden: true }
+      - { name: body, label: תיאור מלא, type: rich-text }
+  - name: spa-categories
+    label: "MTI SPA · קטגוריות"
+    type: collection
+    path: content/spa/categories
+    view: { primary: title, fields: [title, order] }
+    fields:
+      - { name: title, label: שם הקטגוריה, type: string, required: true }
+      - { name: summary, label: תיאור קצר, type: text }
+      - { name: image, label: תמונה, type: image, options: { media: spa } }
+      - { name: order, label: סדר הופעה, type: number }
+      - { name: body, label: טקסט בראש עמוד הקטגוריה, type: rich-text }
+  - name: bath-products
+    label: "MTI BATH · מוצרים"
+    type: collection
+    path: content/bath/products
+    filename: "{primary}.md"
+    view:
+      primary: title
+      fields: [title, category, type]
+      sort: [title]
+      search: [title]
+    fields:
+      - { name: title, label: שם המוצר, type: string, required: true }
+      - name: category
+        label: קטגוריה
+        type: select
+        required: true
+        options:
+          values:
+            - { value: bathtubs, label: "אמבטיות וג׳קוזי" }
+            - { value: freestanding, label: "אמבטיות Free Standing" }
+            - { value: shower-trays, label: "אגניות" }
+            - { value: showers, label: "מקלחונים" }
+            - { value: surplus, label: "עודפים" }
+      - { name: type, label: "סוג (לסינון בעמוד הקטגוריה)", type: string }
+      - { name: summary, label: תיאור קצר, type: text }
+      - name: images
+        label: תמונות (הראשונה היא הראשית)
+        type: image
+        list: true
+        options: { media: bath }
+      - name: specs
+        label: מפרט טכני
+        type: object
+        list: true
+        fields:
+          - { name: label, label: שם השדה, type: string }
+          - { name: value, label: ערך, type: string }
+      - { name: featured, label: להציג בדף הבית, type: boolean }
+      - { name: hidden, label: להסתיר מהאתר, type: boolean }
+      - { name: order, label: "סדר הופעה (מספר קטן קודם)", type: number }
+      - { name: old_url, label: כתובת באתר הישן, type: string, hidden: true }
+      - { name: body, label: תיאור מלא, type: rich-text }
+  - name: bath-categories
+    label: "MTI BATH · קטגוריות"
+    type: collection
+    path: content/bath/categories
+    view: { primary: title, fields: [title, order] }
+    fields:
+      - { name: title, label: שם הקטגוריה, type: string, required: true }
+      - { name: summary, label: תיאור קצר, type: text }
+      - { name: image, label: תמונה, type: image, options: { media: bath } }
+      - { name: order, label: סדר הופעה, type: number }
+      - { name: body, label: טקסט בראש עמוד הקטגוריה, type: rich-text }
+  - name: bath-dealers
+    label: "MTI BATH · משווקים"
+    type: collection
+    path: content/bath/dealers
+    filename: "{primary}.md"
+    view: { primary: name, fields: [name, city, region, phone], sort: [city] }
+    fields:
+      - { name: name, label: שם החנות, type: string, required: true }
+      - { name: city, label: עיר, type: string, required: true }
+      - name: region
+        label: אזור
+        type: select
+        options: { values: [צפון, שרון, מרכז, שפלה, ירושלים והסביבה, דרום] }
+      - { name: address, label: כתובת, type: string }
+      - { name: phone, label: טלפון, type: string }
+      - { name: website, label: אתר, type: string }
+  - name: hub-portals
+    label: "MTI ISRAEL · תחומים בדף הבית"
+    type: collection
+    path: content/hub/categories
+    view: { primary: title, fields: [title, link, order] }
+    fields:
+      - { name: title, label: כותרת, type: string, required: true }
+      - { name: summary, label: תיאור קצר, type: text }
+      - { name: link, label: קישור, type: string }
+      - { name: image, label: תמונה, type: image, options: { media: hub } }
+      - { name: order, label: סדר הופעה, type: number }
+  - name: hub-posts
+    label: "MTI ISRAEL · בלוג"
+    type: collection
+    path: content/hub/posts
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view: { primary: title, fields: [title, date], sort: [date] }
+    fields:
+      - { name: title, label: כותרת, type: string, required: true }
+      - { name: date, label: תאריך, type: date, required: true }
+      - { name: summary, label: תקציר, type: text }
+      - { name: image, label: תמונה, type: image, options: { media: hub } }
+      - { name: old_url, label: כתובת באתר הישן, type: string, hidden: true }
+      - { name: body, label: תוכן, type: rich-text }
+  - name: spa-settings
+    label: "MTI SPA · פרטי קשר וטקסטים"
+    type: file
+    path: content/spa/settings.json
+    fields:
+      - { name: brand, label: שם המותג, type: string }
+      - { name: tagline, label: שורת תיאור, type: string }
+      - { name: hero_title, label: כותרת ראשית בדף הבית, type: string }
+      - { name: hero_text, label: טקסט בדף הבית, type: text }
+      - { name: cta_label, label: טקסט הכפתור הראשי, type: string }
+      - { name: phone, label: טלפון, type: string }
+      - { name: whatsapp, label: "ווטסאפ (בפורמט 9725XXXXXXXX)", type: string }
+      - { name: service_whatsapp, label: ווטסאפ שירות לקוחות, type: string }
+      - { name: email, label: אימייל, type: string }
+      - { name: address, label: כתובת אולם התצוגה, type: string }
+      - name: hours
+        label: שעות פתיחה
+        type: object
+        list: true
+        fields:
+          - { name: days, label: ימים, type: string }
+          - { name: time, label: שעות, type: string }
+      - name: promises
+        label: למה MTI (ארבע נקודות)
+        type: object
+        list: true
+        fields:
+          - { name: title, label: כותרת, type: string }
+          - { name: text, label: טקסט, type: string }
+      - { name: about, label: טקסט אודות, type: text }
+      - { name: theme, label: ערכת צבעים, type: string, hidden: true }
+  - name: bath-settings
+    label: "MTI BATH · פרטי קשר וטקסטים"
+    type: file
+    path: content/bath/settings.json
+    fields:
+      - { name: brand, label: שם המותג, type: string }
+      - { name: tagline, label: שורת תיאור, type: string }
+      - { name: hero_title, label: כותרת ראשית בדף הבית, type: string }
+      - { name: hero_text, label: טקסט בדף הבית, type: text }
+      - { name: cta_label, label: טקסט הכפתור הראשי, type: string }
+      - { name: phone, label: טלפון, type: string }
+      - { name: whatsapp, label: "ווטסאפ (בפורמט 9725XXXXXXXX)", type: string }
+      - { name: service_whatsapp, label: ווטסאפ שירות לקוחות, type: string }
+      - { name: email, label: אימייל, type: string }
+      - { name: address, label: כתובת אולם התצוגה, type: string }
+      - name: hours
+        label: שעות פתיחה
+        type: object
+        list: true
+        fields:
+          - { name: days, label: ימים, type: string }
+          - { name: time, label: שעות, type: string }
+      - name: promises
+        label: למה MTI (ארבע נקודות)
+        type: object
+        list: true
+        fields:
+          - { name: title, label: כותרת, type: string }
+          - { name: text, label: טקסט, type: string }
+      - { name: about, label: טקסט אודות, type: text }
+      - { name: theme, label: ערכת צבעים, type: string, hidden: true }
+  - name: hub-settings
+    label: "MTI ISRAEL · פרטי קשר וטקסטים"
+    type: file
+    path: content/hub/settings.json
+    fields:
+      - { name: brand, label: שם המותג, type: string }
+      - { name: tagline, label: שורת תיאור, type: string }
+      - { name: hero_title, label: כותרת ראשית בדף הבית, type: string }
+      - { name: hero_text, label: טקסט בדף הבית, type: text }
+      - { name: cta_label, label: טקסט הכפתור הראשי, type: string }
+      - { name: phone, label: טלפון, type: string }
+      - { name: whatsapp, label: "ווטסאפ (בפורמט 9725XXXXXXXX)", type: string }
+      - { name: service_whatsapp, label: ווטסאפ שירות לקוחות, type: string }
+      - { name: email, label: אימייל, type: string }
+      - { name: address, label: כתובת אולם התצוגה, type: string }
+      - name: hours
+        label: שעות פתיחה
+        type: object
+        list: true
+        fields:
+          - { name: days, label: ימים, type: string }
+          - { name: time, label: שעות, type: string }
+      - name: promises
+        label: למה MTI (ארבע נקודות)
+        type: object
+        list: true
+        fields:
+          - { name: title, label: כותרת, type: string }
+          - { name: text, label: טקסט, type: string }
+      - { name: about, label: טקסט אודות, type: text }
+      - { name: theme, label: ערכת צבעים, type: string, hidden: true }

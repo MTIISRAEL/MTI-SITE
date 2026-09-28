@@ -1,0 +1,31 @@
+---
+title: "MTI-412 180X80X58 אמבטיה פינתית Free Standing"
+category: "freestanding"
+type: "מלבניות"
+images:
+  - "/media/2022-05-412.jpg"
+  - "/media/2024-07-180X80-MTI-412-מפרט.jpg"
+specs:
+  - label: "אורך (ס\"מ)"
+    value: "180"
+  - label: "רוחב (ס\"מ)"
+    value: "80"
+  - label: "גובה (ס\"מ)"
+    value: "58"
+  - label: "מרחק לניקוז (ס\"מ)"
+    value: "90"
+  - label: "משקל (ק\"ג)"
+    value: "35"
+  - label: "תכולת מים (ליטר)"
+    value: "לחץ למידע נוסף"
+  - label: "סוג"
+    value: "אמבטיה עומדת"
+  - label: "עיצוב"
+    value: "אמבטיה מלבנית"
+  - label: "כמות רוחצים"
+    value: "2"
+  - label: "ניקוז"
+    value: "אמצע"
+order: 100
+old_url: "https://mtibath.co.il/product/mti-412-180x80x58-%d7%90%d7%9e%d7%91%d7%98%d7%99%d7%94-%d7%a4%d7%99%d7%a0%d7%aa%d7%99%d7%aa-free-standing/"
+---

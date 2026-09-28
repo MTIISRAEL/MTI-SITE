@@ -127,3 +127,8 @@ a.card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(20,33,4
 .filter-row { margin-bottom: 28px; }
 .filter-row input { font: inherit; width: min(420px, 100%); padding: 12px 16px; border: 1px solid var(--line); border-radius: 999px; }
 .region { margin-bottom: 40px; }
+.chips.filter { margin: 0 0 24px; }
+.chip { font: inherit; cursor: pointer; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 16px; }
+.chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.badge.inline { position: static; margin-inline-start: 12px; vertical-align: middle; }
+.card[hidden], .region[hidden], .dealer[hidden] { display: none; }

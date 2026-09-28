@@ -1,0 +1,31 @@
+---
+title: "MTI-411 170X80X59 אמבטיה פינתית Free Standing"
+category: "freestanding"
+type: "מלבניות"
+images:
+  - "/media/2022-05-411.jpg"
+  - "/media/2024-07-170X80-MTI-411-מפרט.jpg"
+specs:
+  - label: "אורך (ס\"מ)"
+    value: "170"
+  - label: "רוחב (ס\"מ)"
+    value: "80"
+  - label: "גובה (ס\"מ)"
+    value: "59"
+  - label: "מרחק לניקוז (ס\"מ)"
+    value: "26"
+  - label: "משקל (ק\"ג)"
+    value: "39"
+  - label: "תכולת מים (ליטר)"
+    value: "לחץ למידע נוסף"
+  - label: "סוג"
+    value: "אמבטיה עומדת"
+  - label: "עיצוב"
+    value: "אמבטיה פינתית"
+  - label: "כמות רוחצים"
+    value: "1"
+  - label: "ניקוז"
+    value: "צד"
+order: 100
+old_url: "https://mtibath.co.il/product/mti-411-170x80x59-%d7%90%d7%9e%d7%91%d7%98%d7%99%d7%94-%d7%a4%d7%99%d7%a0%d7%aa%d7%99%d7%aa-free-standing/"
+---

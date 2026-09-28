@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import CtaBand from '../components/CtaBand.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { products } from '../lib/site.js';
-const list = (await products()).filter((p) => p.data.sale_price);
+const list = (await products()).filter((p) => p.data.on_sale);
 ---
 <Base title="מבצעים" description="מבצעים ועודפים על מערכות ספא, בריכות וציוד.">
   <section class="hero small">
