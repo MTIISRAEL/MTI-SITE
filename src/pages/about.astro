@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { company, promises } from '../data/site.js';
+---
+<Base title="אודות">
+  <section class="hero">
+    <div class="container">
+      <h1>אודות MTI</h1>
+      <p class="lead">החברה נוסדה ב-{company.founded} על ידי האחים רוני וניסים שאול, ומאז מייצרת ומשווקת באשדוד מוצרי רחצה, ספא ובריכות.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <h2>ייצור ישראלי, שירות אישי</h2>
+        <p>אנחנו מתכננים ומייצרים את המוצרים שלנו בישראל, משתמשים בחומרי גלם איכותיים, ומלווים כל לקוח מהבחירה באולם התצוגה ועד ההתקנה והשירות לאורך שנים, כולל חלקי חילוף גם לדגמים ותיקים.</p>
+      </div>
+      <div class="promises">
+        {promises.map(([t, s]) => <div class="promise"><strong>{t}</strong><span>{s}</span></div>)}
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

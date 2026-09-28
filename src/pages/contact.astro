@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import { company, divisions } from '../data/site.js';
+---
+<Base title="צור קשר">
+  <section class="hero">
+    <div class="container">
+      <h1>צור קשר</h1>
+      <p class="lead">השאירו פרטים ונחזור אליכם, או בואו לאולם התצוגה שלנו באשדוד.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container two-col">
+      <form class="form" id="lead-form">
+        <label>שם מלא<input name="name" required autocomplete="name" /></label>
+        <label>טלפון<input name="phone" type="tel" required autocomplete="tel" /></label>
+        <label>מתעניינים ב
+          <select name="topic">
+            {divisions.flatMap((d) => d.categories.map((c) => <option>{c.title}</option>))}
+            <option>שירות וחלקי חילוף</option>
+          </select>
+        </label>
+        <label>הודעה<textarea name="message" rows="4"></textarea></label>
+        <button class="btn" type="submit">שליחה בווטסאפ</button>
+      </form>
+      <div class="info-list">
+        <h2>אולם התצוגה</h2>
+        <p>{company.address}</p>
+        {company.hours.map(([d, h]) => <p>{d}: {h}</p>)}
+        <p>טלפון: <a href={company.phoneHref}>{company.phone}</a></p>
+        <p>ווטסאפ אמבטיה ומקלחת: <a href={`https://wa.me/${company.whatsapp.bath}`}>050-7688187</a></p>
+        <p>ווטסאפ ספא ובריכות: <a href={`https://wa.me/${company.whatsapp.spa}`}>050-7693251</a></p>
+        <p>ווטסאפ שירות לקוחות: <a href={`https://wa.me/${company.whatsapp.service}`}>050-6478913</a></p>
+      </div>
+    </div>
+  </section>
+  <script define:vars={{ wa: company.whatsapp.bath }}>
+    document.getElementById('lead-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const f = new FormData(e.target);
+      const text = `שלום, שמי ${f.get('name')} (${f.get('phone')}). מתעניין/ת ב${f.get('topic')}. ${f.get('message') || ''}`;
+      window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank');
+    });
+  </script>
+</Base>

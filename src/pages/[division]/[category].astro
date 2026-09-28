@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { divisions } from '../../data/site.js';
+
+export function getStaticPaths() {
+  return divisions.flatMap((d) =>
+    d.categories.map((c) => ({ params: { division: d.slug, category: c.slug }, props: { d, c } }))
+  );
+}
+const { d, c } = Astro.props;
+---
+<Base title={c.title} description={c.summary} whatsapp={d.whatsapp}>
+  <section class={`hero ${d.slug}`}>
+    <div class="container">
+      <p class="breadcrumbs"><a href="/">דף הבית</a> / <a href={`/${d.slug}/`}>{d.title}</a> / {c.title}</p>
+      <h1>{c.title}</h1>
+      <p class="lead">{c.summary}</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container grid">
+      {c.items.map((i) => (
+        <div class="card">
+          <div class={`card-media ${d.slug}`}>תמונה</div>
+          <div class="card-body">
+            <h3>{i}</h3>
+            <p>מידות, מפרט וצבעים יתווספו מהקטלוג.</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+  <CtaBand whatsapp={d.whatsapp} />
+</Base>

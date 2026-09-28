@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { company, divisions, promises } from '../data/site.js';
+---
+<Base>
+  <section class="hero">
+    <div class="container">
+      <h1>אמבטיה, מקלחת, ספא ובריכות.<br />מייצור ישראלי מאז {company.founded}.</h1>
+      <p class="lead">MTI מתכננת ומייצרת באשדוד אמבטיות, ג׳קוזי, כיורים, מקלחונים, מערכות ספא ובריכות שחייה נגד זרם, עם שירות אישי מהבחירה ועד ההתקנה.</p>
+      <div class="hero-actions">
+        {divisions.map((d) => <a class="btn ghost" href={`/${d.slug}/`}>{d.title}</a>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid">
+      {divisions.map((d) => (
+        <a class={`division ${d.slug}`} href={`/${d.slug}/`}>
+          <h2>{d.title}</h2>
+          <p>{d.tagline}</p>
+          <span class="arrow">לכל המוצרים ←</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="container">
+      <h2>למה MTI</h2>
+      <div class="promises" style="margin-top:24px">
+        {promises.map(([t, s]) => <div class="promise"><strong>{t}</strong><span>{s}</span></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>כל הקטגוריות</h2>
+      <div class="grid" style="margin-top:24px">
+        {divisions.flatMap((d) => d.categories.map((c) => (
+          <a class="card" href={`/${d.slug}/${c.slug}/`}>
+            <div class={`card-media ${d.slug}`}>תמונה</div>
+            <div class="card-body"><h3>{c.title}</h3><p>{c.summary}</p></div>
+          </a>
+        )))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

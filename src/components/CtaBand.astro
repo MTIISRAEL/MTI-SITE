@@ -1,0 +1,16 @@
+---
+import { company } from '../data/site.js';
+const { whatsapp = company.whatsapp.bath } = Astro.props;
+---
+<section class="section">
+  <div class="container cta-band">
+    <div>
+      <h2>רוצים לראות מקרוב?</h2>
+      <p>בואו לאולם התצוגה ב{company.address}, או כתבו לנו ונחזור אליכם.</p>
+    </div>
+    <div class="hero-actions" style="margin:0">
+      <a class="btn" href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener">ווטסאפ</a>
+      <a class="btn ghost" href={company.phoneHref}>{company.phone}</a>
+    </div>
+  </div>
+</section>
