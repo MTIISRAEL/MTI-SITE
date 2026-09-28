@@ -4,7 +4,9 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 const SITES = ['mtibath.co.il', 'mtispa.co.il'];
-const MAX_PAGES = 400;
+const MAX_PAGES = 300;
+const DEADLINE = Date.now() + 22 * 60 * 1000; // leave time to commit whatever was fetched
+const pool = async (items, n, fn) => { const q = [...items]; await Promise.all(Array.from({ length: n }, async () => { while (q.length && Date.now() < DEADLINE) await fn(q.shift()); })); };
 const UA = 'Mozilla/5.0 (MTI site migration)';
 // Spam URLs injected into the old mtibath sitemap; never crawl them.
 const SKIP = [/\/sale\/search\//, /\/wp-(admin|includes|json|login)/, /\.php/, /\/feed\/?$/, /\/cart|\/checkout|\/my-account/, /\?/];
@@ -15,7 +17,7 @@ const text = (html) => decode(html.replace(/<(script|style|noscript|svg)[\s\S]*?
 async function get(url) {
   for (let i = 0; i < 3; i++) {
     try {
-      const r = await fetch(url, { headers: { 'user-agent': UA }, redirect: 'follow' });
+      const r = await fetch(url, { headers: { 'user-agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
       return r;
     } catch (e) { await new Promise((res) => setTimeout(res, 1500 * (i + 1))); }
   }
@@ -31,12 +33,11 @@ async function crawl(host) {
   const pages = [];
   const images = new Map();
 
-  while (queue.length && pages.length < MAX_PAGES) {
-    const url = queue.shift();
+  const visit = async (url) => {
     const r = await get(url);
     if (!r || !r.ok || !(r.headers.get('content-type') || '').includes('html')) {
       pages.push({ url, status: r ? r.status : 'error' });
-      continue;
+      return;
     }
     const html = await r.text();
     const title = decode((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '').trim();
@@ -72,25 +73,30 @@ async function crawl(host) {
       if (!seen.has(href)) { seen.add(href); queue.push(href); }
     }
     console.log(host, pages.length, url);
+  };
+  while (queue.length && pages.length < MAX_PAGES && Date.now() < DEADLINE) {
+    const batch = queue.splice(0, 6);
+    await Promise.all(batch.map(visit));
+    if (pages.length % 30 < 6) await fs.writeFile(path.join(out, 'pages.json'), JSON.stringify(pages, null, 1));
   }
+  await fs.writeFile(path.join(out, 'pages.json'), JSON.stringify(pages, null, 1));
 
   // Download images, capped so the repo stays small.
   let n = 0;
-  for (const src of images.keys()) {
-    if (n >= 1500) break;
+  await pool([...images.keys()].slice(0, 1200), 8, async (src) => {
     const rel = decodeURIComponent(new URL(src).pathname.replace(/^.*\/wp-content\/uploads\//, '')).replace(/[^\w.\-\/֐-׿]/g, '_');
     const file = path.join(out, 'images', rel);
     try {
       const r = await get(src);
-      if (!r || !r.ok) continue;
+      if (!r || !r.ok) return;
       const buf = Buffer.from(await r.arrayBuffer());
-      if (buf.length > 3_000_000) continue;
+      if (buf.length > 3_000_000) return;
       await fs.mkdir(path.dirname(file), { recursive: true });
       await fs.writeFile(file, buf);
       images.set(src, path.relative(out, file));
       n++;
     } catch {}
-  }
+  });
 
   await fs.writeFile(path.join(out, 'pages.json'), JSON.stringify(pages, null, 1));
   await fs.writeFile(path.join(out, 'images.json'), JSON.stringify(Object.fromEntries(images), null, 1));
@@ -117,5 +123,6 @@ async function spaProducts() {
   console.log('spa products via API', all.length);
 }
 
-await spaProducts().catch((e) => console.log('spa API failed', e.message));
-for (const s of SITES) await crawl(s);
+const HOSTS = process.argv[2] ? [process.argv[2]] : SITES;
+if (HOSTS.includes('mtispa.co.il')) await spaProducts().catch((e) => console.log('spa API failed', e.message));
+for (const s of HOSTS) await crawl(s).catch((e) => console.log('crawl failed', s, e.message));
