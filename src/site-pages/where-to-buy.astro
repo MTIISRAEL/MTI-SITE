@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { settings, tel, wa } from '../lib/site.js';
+const dealers = (await getCollection('dealers')).sort((a, b) => a.data.city.localeCompare(b.data.city, 'he'));
+const regions = [...new Set(dealers.map((d) => d.data.region))];
+---
+<Base title="איפה קונים" description="רשימת המשווקים של MTI BATH בכל הארץ.">
+  <section class="hero small">
+    <div class="container">
+      <h1>איפה קונים</h1>
+      <p class="lead">המוצרים שלנו מוצגים ונמכרים אצל משווקים מורשים בכל הארץ. אפשר גם לבקר באולם התצוגה שלנו ב{settings.address}.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="filter-row">
+        <input id="dealer-search" type="search" placeholder="חיפוש לפי עיר או שם חנות" aria-label="חיפוש משווק" />
+      </div>
+      {regions.map((r) => (
+        <div class="region" data-region>
+          <h2>{r}</h2>
+          <div class="grid">
+            {dealers.filter((d) => d.data.region === r).map((d) => (
+              <div class="card dealer" data-search={`${d.data.name} ${d.data.city} ${d.data.address}`}>
+                <div class="card-body">
+                  <h3>{d.data.name}</h3>
+                  <p>{d.data.city}{d.data.address && `, ${d.data.address}`}</p>
+                  {d.data.phone && <p><a href={tel(d.data.phone)}>{d.data.phone}</a></p>}
+                  {d.data.website && <p><a href={d.data.website} target="_blank" rel="noopener">לאתר החנות</a></p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      {!dealers.length && <p class="lead">רשימת המשווקים תתעדכן בקרוב. בינתיים <a href={wa(settings.whatsapp, 'שלום, איפה אפשר לראות את המוצרים שלכם?')}>כתבו לנו</a> ונפנה אתכם למשווק הקרוב.</p>}
+    </div>
+  </section>
+  <script>
+    const input = document.getElementById('dealer-search');
+    input?.addEventListener('input', () => {
+      const q = input.value.trim();
+      document.querySelectorAll('.dealer').forEach((el) => { el.hidden = q && !el.dataset.search.includes(q); });
+      document.querySelectorAll('[data-region]').forEach((r) => { r.hidden = ![...r.querySelectorAll('.dealer')].some((d) => !d.hidden); });
+    });
+  </script>
+</Base>

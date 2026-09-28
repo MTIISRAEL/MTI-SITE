@@ -1,19 +1,20 @@
 {
   "name": "mti-site",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "dev:spa": "SITE=spa astro dev",
+    "dev:bath": "SITE=bath astro dev",
+    "dev:hub": "SITE=hub astro dev",
+    "build": "SITE=${SITE:-spa} astro build",
+    "build:spa": "SITE=spa astro build",
+    "build:bath": "SITE=bath astro build",
+    "build:hub": "SITE=hub astro build",
+    "build:all": "npm run build:spa && npm run build:bath && npm run build:hub"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "astro": "^7.3.5"
-  },
-  "type": "module"
+  }
 }

@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { categories, products } from '../../lib/site.js';
+
+export async function getStaticPaths() {
+  return (await categories()).filter((c) => !c.data.link).map((c) => ({ params: { category: c.id }, props: { c } }));
+}
+const { c } = Astro.props;
+const list = await products(c.id);
+---
+<Base title={c.data.title} description={c.data.summary} image={c.data.image}>
+  <section class="hero small">
+    <div class="container">
+      <p class="breadcrumbs"><a href="/">דף הבית</a> / {c.data.title}</p>
+      <h1>{c.data.title}</h1>
+      <p class="lead">{c.data.summary}</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      {c.body && <div class="prose" set:html={c.rendered?.html} />}
+      {list.length
+        ? <div class="grid">{list.map((p) => <ProductCard p={p} />)}</div>
+        : <p class="lead">הדגמים בקטגוריה הזו יתווספו בקרוב.</p>}
+    </div>
+  </section>
+  <CtaBand />
+</Base>

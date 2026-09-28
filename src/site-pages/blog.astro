@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('posts')).sort((a, b) => b.data.date - a.data.date);
+---
+<Base title="בלוג">
+  <section class="hero small"><div class="container"><h1>בלוג</h1><p class="lead">מדריכים, השראה וחדשות מ-MTI.</p></div></section>
+  <section class="section">
+    <div class="container grid">
+      {posts.map((p) => (
+        <a class="card" href={`/blog/${p.id}/`}>
+          <div class="card-media">{p.data.image ? <img src={p.data.image} alt={p.data.title} loading="lazy" /> : <span>תמונה</span>}</div>
+          <div class="card-body"><h3>{p.data.title}</h3><p>{p.data.summary}</p></div>
+        </a>
+      ))}
+      {!posts.length && <p class="lead">בקרוב.</p>}
+    </div>
+  </section>
+</Base>

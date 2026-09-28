@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products } from '../lib/site.js';
+const list = (await products()).filter((p) => p.data.sale_price);
+---
+<Base title="מבצעים" description="מבצעים ועודפים על מערכות ספא, בריכות וציוד.">
+  <section class="hero small">
+    <div class="container"><h1>מבצעים</h1><p class="lead">דגמי תצוגה, עודפים ומבצעים לזמן מוגבל.</p></div>
+  </section>
+  <section class="section">
+    <div class="container">
+      {list.length ? <div class="grid">{list.map((p) => <ProductCard p={p} />)}</div> : <p class="lead">כרגע אין מבצעים פעילים. כתבו לנו בווטסאפ ונעדכן אתכם.</p>}
+    </div>
+  </section>
+  <CtaBand />
+</Base>

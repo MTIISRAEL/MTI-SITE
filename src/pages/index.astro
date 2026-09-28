@@ -1,50 +1,55 @@
 ---
 import Base from '../layouts/Base.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { company, divisions, promises } from '../data/site.js';
+import ProductCard from '../components/ProductCard.astro';
+import { settings, categories, products, isHub, isBrand, wa } from '../lib/site.js';
+const cats = await categories();
+const featured = (await products()).filter((p) => p.data.featured).slice(0, 6);
 ---
 <Base>
   <section class="hero">
     <div class="container">
-      <h1>אמבטיה, מקלחת, ספא ובריכות.<br />מייצור ישראלי מאז {company.founded}.</h1>
-      <p class="lead">MTI מתכננת ומייצרת באשדוד אמבטיות, ג׳קוזי, כיורים, מקלחונים, מערכות ספא ובריכות שחייה נגד זרם, עם שירות אישי מהבחירה ועד ההתקנה.</p>
+      <h1>{settings.hero_title}</h1>
+      <p class="lead">{settings.hero_text}</p>
       <div class="hero-actions">
-        {divisions.map((d) => <a class="btn ghost" href={`/${d.slug}/`}>{d.title}</a>)}
+        {isHub
+          ? <a class="btn light" href="/contact/">{settings.cta_label}</a>
+          : isBrand
+            ? <a class="btn light" href="/where-to-buy/">{settings.cta_label}</a>
+            : <a class="btn light" href={wa(settings.whatsapp, 'שלום, אשמח לקבל הצעת מחיר')} target="_blank" rel="noopener">{settings.cta_label}</a>}
+        {cats[0] && !cats[0].data.link && <a class="btn ghost" href={`/${cats[0].id}/`}>לקטלוג</a>}
       </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="container grid">
-      {divisions.map((d) => (
-        <a class={`division ${d.slug}`} href={`/${d.slug}/`}>
-          <h2>{d.title}</h2>
-          <p>{d.tagline}</p>
-          <span class="arrow">לכל המוצרים ←</span>
-        </a>
-      ))}
+    <div class="container">
+      <h2>{isHub ? 'התחומים שלנו' : 'הקטגוריות שלנו'}</h2>
+      <div class="grid" style="margin-top:24px">
+        {cats.map((c) => (
+          <a class="card" href={c.data.link || `/${c.id}/`}>
+            <div class="card-media">{c.data.image ? <img src={c.data.image} alt={c.data.title} loading="lazy" /> : <span>תמונה</span>}</div>
+            <div class="card-body"><h3>{c.data.title}</h3><p>{c.data.summary}</p></div>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
-  <section class="section soft">
+  {featured.length > 0 && (
+    <section class="section soft">
+      <div class="container">
+        <h2>דגמים נבחרים</h2>
+        <div class="grid" style="margin-top:24px">{featured.map((p) => <ProductCard p={p} />)}</div>
+      </div>
+    </section>
+  )}
+
+  <section class={featured.length ? 'section' : 'section soft'}>
     <div class="container">
       <h2>למה MTI</h2>
       <div class="promises" style="margin-top:24px">
-        {promises.map(([t, s]) => <div class="promise"><strong>{t}</strong><span>{s}</span></div>)}
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2>כל הקטגוריות</h2>
-      <div class="grid" style="margin-top:24px">
-        {divisions.flatMap((d) => d.categories.map((c) => (
-          <a class="card" href={`/${d.slug}/${c.slug}/`}>
-            <div class={`card-media ${d.slug}`}>תמונה</div>
-            <div class="card-body"><h3>{c.title}</h3><p>{c.summary}</p></div>
-          </a>
-        )))}
+        {settings.promises.map((x) => <div class="promise"><strong>{x.title}</strong><span>{x.text}</span></div>)}
       </div>
     </div>
   </section>

@@ -1,16 +1,17 @@
 ---
-import { company } from '../data/site.js';
-const { whatsapp = company.whatsapp.bath } = Astro.props;
+import { settings, wa, tel, isBrand } from '../lib/site.js';
 ---
 <section class="section">
   <div class="container cta-band">
     <div>
-      <h2>רוצים לראות מקרוב?</h2>
-      <p>בואו לאולם התצוגה ב{company.address}, או כתבו לנו ונחזור אליכם.</p>
+      <h2>{isBrand ? 'רוצים לראות מקרוב?' : 'מתלבטים איזה דגם מתאים לכם?'}</h2>
+      <p>{isBrand ? 'המוצרים שלנו מוצגים אצל משווקים בכל הארץ ובאולם התצוגה שלנו באשדוד.' : `כתבו לנו או בואו לאולם התצוגה ב${settings.address}.`}</p>
     </div>
     <div class="hero-actions" style="margin:0">
-      <a class="btn" href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener">ווטסאפ</a>
-      <a class="btn ghost" href={company.phoneHref}>{company.phone}</a>
+      {isBrand
+        ? <a class="btn" href="/where-to-buy/">איפה קונים</a>
+        : <a class="btn" href={wa(settings.whatsapp, 'שלום, אשמח לקבל הצעת מחיר')} target="_blank" rel="noopener">{settings.cta_label}</a>}
+      <a class="btn ghost" href={tel(settings.phone)}>{settings.phone}</a>
     </div>
   </div>
 </section>

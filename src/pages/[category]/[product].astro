@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { render } from 'astro:content';
+import { categories, products, settings, isSales, isBrand, wa, tel, price } from '../../lib/site.js';
+
+export async function getStaticPaths() {
+  const cats = await categories();
+  return (await products()).map((p) => ({
+    params: { category: p.data.category, product: p.id },
+    props: { p, c: cats.find((c) => c.id === p.data.category) },
+  }));
+}
+const { p, c } = Astro.props;
+const d = p.data;
+const { Content } = await render(p);
+---
+<Base title={d.title} description={d.summary || c?.data.summary} image={d.images[0]}>
+  <section class="section">
+    <div class="container">
+      <p class="breadcrumbs dark"><a href="/">דף הבית</a> / {c && <a href={`/${c.id}/`}>{c.data.title}</a>} / {d.title}</p>
+      <div class="product">
+        <div class="gallery">
+          {d.images.length
+            ? d.images.map((src, i) => <img src={src} alt={`${d.title} ${i + 1}`} loading={i ? 'lazy' : 'eager'} />)
+            : <div class="card-media"><span>תמונה</span></div>}
+        </div>
+        <div class="product-info">
+          <h1>{d.title}</h1>
+          {d.summary && <p class="lead">{d.summary}</p>}
+          {isSales && d.price && (
+            <p class="price big">{d.sale_price ? <><s>{price(d.price)}</s> <strong>{price(d.sale_price)}</strong></> : <strong>{price(d.price)}</strong>}</p>
+          )}
+          {d.specs.length > 0 && (
+            <table class="specs"><tbody>{d.specs.map((s) => <tr><th>{s.label}</th><td>{s.value}</td></tr>)}</tbody></table>
+          )}
+          <div class="hero-actions">
+            {isBrand
+              ? <a class="btn" href="/where-to-buy/">איפה אפשר לראות ולקנות</a>
+              : <a class="btn" href={wa(settings.whatsapp, `שלום, אשמח לקבל פרטים על ${d.title}`)} target="_blank" rel="noopener">{settings.cta_label}</a>}
+            <a class="btn outline" href={tel(settings.phone)}>{settings.phone}</a>
+          </div>
+          <div class="prose"><Content /></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

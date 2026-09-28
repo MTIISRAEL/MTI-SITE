@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import { company, divisions } from '../data/site.js';
+import { settings, categories, wa, tel, isBrand } from '../lib/site.js';
+const cats = await categories();
 ---
 <Base title="צור קשר">
-  <section class="hero">
+  <section class="hero small">
     <div class="container">
       <h1>צור קשר</h1>
       <p class="lead">השאירו פרטים ונחזור אליכם, או בואו לאולם התצוגה שלנו באשדוד.</p>
@@ -14,10 +15,11 @@ import { company, divisions } from '../data/site.js';
       <form class="form" id="lead-form">
         <label>שם מלא<input name="name" required autocomplete="name" /></label>
         <label>טלפון<input name="phone" type="tel" required autocomplete="tel" /></label>
-        <label>מתעניינים ב
+        <label>נושא
           <select name="topic">
-            {divisions.flatMap((d) => d.categories.map((c) => <option>{c.title}</option>))}
+            {cats.map((c) => <option>{c.data.title}</option>)}
             <option>שירות וחלקי חילוף</option>
+            <option>אחר</option>
           </select>
         </label>
         <label>הודעה<textarea name="message" rows="4"></textarea></label>
@@ -25,21 +27,21 @@ import { company, divisions } from '../data/site.js';
       </form>
       <div class="info-list">
         <h2>אולם התצוגה</h2>
-        <p>{company.address}</p>
-        {company.hours.map(([d, h]) => <p>{d}: {h}</p>)}
-        <p>טלפון: <a href={company.phoneHref}>{company.phone}</a></p>
-        <p>ווטסאפ אמבטיה ומקלחת: <a href={`https://wa.me/${company.whatsapp.bath}`}>050-7688187</a></p>
-        <p>ווטסאפ ספא ובריכות: <a href={`https://wa.me/${company.whatsapp.spa}`}>050-7693251</a></p>
-        <p>ווטסאפ שירות לקוחות: <a href={`https://wa.me/${company.whatsapp.service}`}>050-6478913</a></p>
+        <p>{settings.address}</p>
+        {settings.hours.map((h) => <p>{h.days}: {h.time}</p>)}
+        <p>טלפון: <a href={tel(settings.phone)}>{settings.phone}</a></p>
+        <p>ווטסאפ: <a href={wa(settings.whatsapp)} target="_blank" rel="noopener">שליחת הודעה</a></p>
+        {settings.service_whatsapp && <p>שירות לקוחות: <a href={wa(settings.service_whatsapp)} target="_blank" rel="noopener">ווטסאפ שירות</a></p>}
+        {isBrand && <p><a href="/where-to-buy/">רשימת המשווקים שלנו</a></p>}
       </div>
     </div>
   </section>
-  <script define:vars={{ wa: company.whatsapp.bath }}>
+  <script define:vars={{ number: settings.whatsapp }}>
     document.getElementById('lead-form').addEventListener('submit', (e) => {
       e.preventDefault();
       const f = new FormData(e.target);
-      const text = `שלום, שמי ${f.get('name')} (${f.get('phone')}). מתעניין/ת ב${f.get('topic')}. ${f.get('message') || ''}`;
-      window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank');
+      const text = `שלום, שמי ${f.get('name')} (${f.get('phone')}). נושא: ${f.get('topic')}. ${f.get('message') || ''}`;
+      window.open(`https://wa.me/${number}?text=${encodeURIComponent(text)}`, '_blank');
     });
   </script>
 </Base>
